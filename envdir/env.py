@@ -17,11 +17,12 @@ class Env(UserDict):
     An dict-like object to represent an envdir environment with extensive
     API, can be used as context manager, too.
     """
-    def __init__(self, path):
+    def __init__(self, path, no_clobber=False):
         self.path = path
         self.data = {}
         self.originals = {}
         self.created = {}
+        self.no_clobber = no_clobber
         self._load()
 
     def __repr__(self):
@@ -67,6 +68,8 @@ class Env(UserDict):
 
     def _set(self, name, value):
         if name in os.environ:
+            if self.no_clobber:
+                return
             self.originals[name] = os.environ[name]
         self.data[name] = value
         if value:

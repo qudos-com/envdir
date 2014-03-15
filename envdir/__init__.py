@@ -6,8 +6,8 @@ open = runner.open
 
 
 # for backward compatibility
-def read(path=None):
-    return open(path, stacklevel=2)
+def read(path=None, no_clobber=None):
+    return open(path, stacklevel=2, no_clobber=no_clobber)
 
 
 def run(*args):

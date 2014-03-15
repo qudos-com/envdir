@@ -42,7 +42,7 @@ class Runner(object):
             raise Response("envdir %r not a directory" % path, 111)
         return real_path
 
-    def open(self, path=None, stacklevel=1):
+    def open(self, path=None, stacklevel=1, no_clobber=None):
         if path is None:
             frame = sys._getframe()
             get_parent = lambda frame: frame.f_back
@@ -54,7 +54,7 @@ class Runner(object):
             else:
                 # last holdout, assume cwd
                 path = 'envdir'
-        return Env(self.path(path))
+        return Env(self.path(path), no_clobber=no_clobber)
 
     def shell(self, name, *args):
         self.parser.set_usage(self.envshell_usage)
