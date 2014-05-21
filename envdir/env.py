@@ -61,7 +61,7 @@ class Env(UserDict):
 
     def _get(self, name, default=None):
         path = os.path.join(self.path, name)
-        if not os.path.exists(path):
+        if not os.path.exists(path) or not os.path.isfile(path):
             return default
         with self._open(name) as var:
             return var.read().strip().replace('\x00', '\n')
