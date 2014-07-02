@@ -30,7 +30,6 @@ class Runner(object):
         self.parser = optparse.OptionParser(version=__version__)
         self.parser.disable_interspersed_args()
         self.parser.prog = 'envdir'
-        signal.signal(signal.SIGTERM, self.terminate)
 
     def path(self, path):
         real_path = os.path.realpath(os.path.expanduser(path))
@@ -112,6 +111,7 @@ class Runner(object):
                                             bufsize=0,
                                             close_fds=False,
                                             **params)
+            signal.signal(signal.SIGTERM, self.terminate)
             self.process.wait()
         except OSError as err:
             if err.errno == 2:
